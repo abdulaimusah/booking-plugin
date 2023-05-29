@@ -67,6 +67,7 @@ function booking_plugin_deactivate()
 function booking_plugin_enqueue_scripts()
 {
     wp_enqueue_style('booking-plugin-style', BOOKING_PLUGIN_URL . 'assets/css/style.css', array(), '1.0.0');
+    wp_enqueue_style('booking-plugin-style', BOOKING_PLUGIN_URL . 'assets/css/booking-plugin.css', array(), '1.0.0');
     wp_enqueue_script('booking-plugin-script', BOOKING_PLUGIN_URL . 'assets/js/script.js', array('jquery'), '1.0.0', true);
 }
 add_action('wp_enqueue_scripts', 'booking_plugin_enqueue_scripts');
@@ -76,41 +77,8 @@ function booking_form_shortcode()
 {
     ob_start();
     include BOOKING_PLUGIN_DIR . 'includes/public/booking_form.php';
-    ?>
-    <script>
-        var form = document.querySelector("#booking-form");
-
-        const postData = (event) => {
-            event.preventDefault();
-            var formData = new FormData(form);
-
-            fetch('<?php echo admin_url('admin-ajax.php'); ?>', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/x-www-form-urlencoded',
-                },
-                body: 'action=booking_process&' + new URLSearchParams(formData).toString(),
-            })
-                .then(function (response) {
-                    return response.json();
-                })
-                .then(function (data) {
-                    // Handle the booking confirmation data
-                    // Update the page or show a modal with the confirmation details
-                    alert(data.message);
-
-                    // Reset the form
-                    form.reset();
-                })
-                .catch(function (error) {
-                    alert(error);
-                    alert('An error occurred while submitting the booking. Please try again later.');
-                });
-        };
-
-        form.addEventListener('submit', postData, false);
-    </script>
-    <?php
+    
+    
     return ob_get_clean();
 }
 add_shortcode('booking_form', 'booking_form_shortcode');

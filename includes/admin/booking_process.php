@@ -41,12 +41,12 @@ if ($action === 'booking_process') {
             $response = array(
                 'success' => true,
                 'message' => 'Booking submitted successfully!',
-                'data' => 'data', /* array(
-                   'name' => $name,
-                   'email' => $email,
-                   'booking_date' => $booking_date,
-                   'booking_time' => $booking_time
-                   ) */
+                'data' => array(
+                   'Name' => $name,
+                   'Email' => $email,
+                   'Date' => $booking_date,
+                   'Time' => $booking_time
+                   ) 
             );
 
             // Return the response as JSON
